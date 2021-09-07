@@ -10,6 +10,9 @@
     crossorigin="anonymous"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
     integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Proza+Libre:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
@@ -18,10 +21,51 @@
   <header>
   </header>
   <main>
-    <div data-view="entry-form">
-      <form>
-
-      </form>
+    <div class="vw-100 background-purple">
+      <div class="container">
+        <nav class="row white-text">
+          <div class="column-full">
+            <h3 class="font-weight-400">Code Journal</h3>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="container">
+      <div data-view="entry-form">
+        <form>
+          <div class="row">
+            <div class="column-full">
+              <h1>New Entry</h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-half">
+              <img id="preview-img" src="images/placeholder-image-square.jpg" alt="" class="full-width margin-b-1rem border-radius-4px">
+            </div>
+            <div class="column-half">
+              <label for="title"><h4>Title</h4></label>
+              <input type="text" name="title" id="title" class="full-width margin-b-1rem border-radius-4px">
+              <label for="photo-url">
+                <h4>Photo URL</h4>
+              </label>
+              <input type="text" name="photo-url" id="photo-url" class="full-width margin-b-1rem border-radius-4px">
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-full">
+              <label for="notes">
+                <h4>Notes</h4>
+              </label>
+              <textarea name="notes" id="notes" class="full-width margin-b-1rem border-radius-4px"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-full text-align-right">
+              <button type="submit" class="border-radius-4px">SAVE</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </main>
   <script src="js/data.js"></script>
