@@ -19,7 +19,7 @@ function formSubmit(event) {
   formValues.photoUrl = $entryForm.elements.photoUrl.value;
   formValues.notes = $entryForm.elements.notes.value;
 
-  formValues.nextEntryId = data.nextEntryId;
+  formValues.entryId = data.nextEntryId;
   data.nextEntryId++;
 
   data.entries.unshift(formValues);
