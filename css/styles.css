@@ -44,7 +44,7 @@ input {
 }
 
 textarea {
-  height: 149px;
+  height: 150px;
   resize: none;
 }
 
@@ -76,15 +76,6 @@ button {
 
 .background-purple {
   background-color: rgb(75, 35, 115);
-}
-
-.vw-100 {
-  width: 100vw;
-  max-width: none;
-}
-
-.no-margin {
-  margin: none;
 }
 
 /* media queries */
