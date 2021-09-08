@@ -1,5 +1,8 @@
 /* global data */
 /* exported data */
+
+// dealing with form submission
+
 var $photoUrl = document.querySelector('#photo-url');
 var $previewImg = document.querySelector('#preview-img');
 
@@ -23,9 +26,14 @@ function formSubmit(event) {
 
   data.entries.unshift(formValues);
 
+  $entriesList.prepend(buildEntryTree(formValues));
+
   $previewImg.setAttribute('src', 'images/placeholder-image-square.jpg');
 
   $entryForm.reset();
+
+  $entryFormView.setAttribute('class', 'hidden');
+  $entriesListView.setAttribute('class', '');
 }
 
 $entryForm.addEventListener('submit', formSubmit);
@@ -81,6 +89,38 @@ function contentLoadedHandler(event) {
   for (var i = 0; i < data.entries.length; i++) {
     $entriesList.append(buildEntryTree(data.entries[i]));
   }
+
+  var previousView = data.view;
+  setView(previousView);
 }
 
 window.addEventListener('DOMContentLoaded', contentLoadedHandler);
+
+// view swapping
+
+var $navBar = document.querySelector('header');
+var $views = document.querySelectorAll('main div[data-view]');
+var $entryFormView = document.querySelector('main div[data-view="entry-form');
+var $entriesListView = document.querySelector('main div[data-view="entries');
+
+function swapPages(event) {
+  if (!event.target.matches('a[data-view]')) {
+    return;
+  }
+
+  var dataView = event.target.getAttribute('data-view');
+  setView(dataView);
+}
+
+$navBar.addEventListener('click', swapPages);
+
+function setView(view) {
+  for (var i = 0; i < $views.length; i++) {
+    if ($views[i].getAttribute('data-view') === view) {
+      $views[i].setAttribute('class', '');
+      data.view = view;
+    } else {
+      $views[i].setAttribute('class', 'hidden');
+    }
+  }
+}

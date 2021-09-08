@@ -22,15 +22,20 @@
     <div class="background-purple">
       <div class="container">
         <nav class="row white-text">
-          <div class="column-full">
-            <h3 class="font-weight-400">Code Journal</h3>
+          <div class="column-full justify-start align-baseline">
+            <h3 class="font-weight-400 margin-r-1rem">
+              <a data-view="entry-form">Code Journal</a>
+            </h3>
+            <h4 class="font-weight-400">
+              <a data-view="entries">Entries</a>
+            </h4>
           </div>
         </nav>
       </div>
     </div>
   </header>
   <main>
-    <div data-view="entry-form" class="hidden">
+    <div data-view="entry-form" class="">
       <div class="container">
         <form>
           <div class="row">
@@ -85,7 +90,7 @@
         </form>
       </div>
     </div>
-    <div data-view="entries">
+    <div data-view="entries" class="hidden">
       <div class="container">
         <ul>
         </ul>
