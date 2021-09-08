@@ -32,8 +32,7 @@ function formSubmit(event) {
 
   $entryForm.reset();
 
-  $entryFormView.setAttribute('class', 'hidden');
-  $entriesListView.setAttribute('class', '');
+  setView('entries');
 }
 
 $entryForm.addEventListener('submit', formSubmit);
@@ -100,8 +99,6 @@ window.addEventListener('DOMContentLoaded', contentLoadedHandler);
 
 var $navBar = document.querySelector('header');
 var $views = document.querySelectorAll('main div[data-view]');
-var $entryFormView = document.querySelector('main div[data-view="entry-form');
-var $entriesListView = document.querySelector('main div[data-view="entries');
 
 function swapPages(event) {
   if (!event.target.matches('a[data-view]')) {
