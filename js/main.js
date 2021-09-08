@@ -44,6 +44,7 @@ $entryForm.addEventListener('submit', formSubmit);
         </div>
       </div>
     </li> */
+
 function buildEntryTree(entry) {
   var $li = document.createElement('li');
 
@@ -57,6 +58,29 @@ function buildEntryTree(entry) {
   $textColumn.setAttribute('class', 'column-half');
 
   var $img = document.createElement('img');
-  $img.setAttribute('src', '');
+  $img.setAttribute('src', entry.photoUrl);
   $img.setAttribute('class', 'full-width margin-b-1rem border-radius-4px');
+
+  var $title = document.createElement('h3');
+  $title.textContent = entry.title;
+
+  var $notes = document.createElement('p');
+  $notes.textContent = entry.notes;
+
+  $li.append($row);
+  $row.append($imgColumn, $textColumn);
+  $imgColumn.append($img);
+  $textColumn.append($title, $notes);
+
+  return $li;
 }
+
+var $entriesList = document.querySelector('ul');
+
+function contentLoadedHandler(event) {
+  for (var i = 0; i < data.entries.length; i++) {
+    $entriesList.append(buildEntryTree(data.entries[i]));
+  }
+}
+
+window.addEventListener('DOMContentLoaded', contentLoadedHandler);
