@@ -58,7 +58,7 @@ $entryForm.addEventListener('submit', formSubmit);
     </li> */
 
 function buildEntryTree(entry) {
-  var $li = document.createElement('li');
+  var $entry = document.createElement('li');
 
   var $row = document.createElement('div');
   $row.setAttribute('class', 'row');
@@ -84,21 +84,43 @@ function buildEntryTree(entry) {
 
   var $editIcon = document.createElement('i');
   $editIcon.setAttribute('class', 'fas fa-pen');
+  $editIcon.setAttribute('data-entry-id', entry.entryId);
 
   var $notes = document.createElement('p');
   $notes.textContent = entry.notes;
 
-  $li.append($row);
+  $entry.append($row);
   $row.append($imgColumn, $textColumn);
   $imgColumn.append($img);
   $textColumn.append($titleRow, $notesRow);
   $titleRow.append($title, $editIcon);
   $notesRow.append($notes);
 
-  return $li;
+  return $entry;
 }
 
 var $entriesList = document.querySelector('ul');
+
+function entriesListClick(event) {
+  if (!event.target.matches('i')) {
+    return;
+  }
+
+  setView('entry-form');
+
+  for (var i = 0; i < data.entries.length; i++) {
+    if (JSON.stringify(data.entries[i].entryId) === event.target.getAttribute('data-entry-id')) {
+      data.editing = data.entries[i];
+    }
+  }
+
+  $previewImg.setAttribute('src', data.editing.photoUrl);
+  $entryForm.elements.title.value = data.editing.title;
+  $entryForm.elements.photoUrl.value = data.editing.photoUrl;
+  $entryForm.elements.notes.value = data.editing.notes;
+}
+
+$entriesList.addEventListener('click', entriesListClick);
 
 function contentLoadedHandler(event) {
   for (var i = 0; i < data.entries.length; i++) {
