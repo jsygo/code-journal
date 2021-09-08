@@ -121,3 +121,8 @@ function setView(view) {
     }
   }
 }
+
+var $newButton = document.querySelector('#new-button');
+$newButton.addEventListener('click', function () {
+  setView('entry-form');
+});
