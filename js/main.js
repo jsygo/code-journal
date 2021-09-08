@@ -29,3 +29,34 @@ function formSubmit(event) {
 }
 
 $entryForm.addEventListener('submit', formSubmit);
+
+/*  <li>
+      <div class="row">
+        <div class="column-half">
+          <img
+            src="photoUrl"
+            alt=""
+            class="full-width margin-b-1rem border-radius-4px">
+        </div>
+        <div class="column-half">
+          <h3>Title</h3>
+          <p>Notes</p>
+        </div>
+      </div>
+    </li> */
+function buildEntryTree(entry) {
+  var $li = document.createElement('li');
+
+  var $row = document.createElement('div');
+  $row.setAttribute('class', 'row');
+
+  var $imgColumn = document.createElement('div');
+  $imgColumn.setAttribute('class', 'column-half');
+
+  var $textColumn = document.createElement('div');
+  $textColumn.setAttribute('class', 'column-half');
+
+  var $img = document.createElement('img');
+  $img.setAttribute('src', '');
+  $img.setAttribute('class', 'full-width margin-b-1rem border-radius-4px');
+}
