@@ -1,0 +1,86 @@
+/* creating an entry */
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: rgb(240, 240, 240);
+}
+
+.full-width {
+  width: 100%;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Proza Libre', sans-serif;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.font-weight-400 {
+  font-weight: 400;
+}
+
+.margin-b-1rem {
+  margin-bottom: 1rem;
+}
+
+/* form control styling */
+img {
+  object-fit: cover;
+  height: 260px;
+  margin-top: 0.5rem;
+}
+
+input {
+  height: 40px;
+}
+
+textarea {
+  height: 150px;
+  resize: none;
+}
+
+input,
+textarea {
+  border: 2px solid rgb(224, 223, 224);
+}
+
+input:focus,
+textarea:focus {
+  outline-color: rgb(75, 35, 115);
+}
+
+button {
+  background-color: rgb(75, 35, 115);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+}
+
+.border-radius-4px {
+  border-radius: 4px;
+}
+
+/* nav styling */
+.white-text {
+  color: white;
+}
+
+.background-purple {
+  background-color: rgb(75, 35, 115);
+}
+
+/* media queries */
+@media screen and (min-width: 768px) {
+  img {
+    height: 340px;
+  }
+}
