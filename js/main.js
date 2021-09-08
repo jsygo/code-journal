@@ -46,8 +46,13 @@ $entryForm.addEventListener('submit', formSubmit);
             class="full-width margin-b-1rem border-radius-4px">
         </div>
         <div class="column-half">
-          <h3>Title</h3>
-          <p>Notes</p>
+          <div class="row justify-between">
+            <h3>Title</h3>
+            <i class="fas fa-pen"></i>
+          </div>
+          <div class="row">
+            <p>Notes</p>
+          </div>
         </div>
       </div>
     </li> */
@@ -64,6 +69,12 @@ function buildEntryTree(entry) {
   var $textColumn = document.createElement('div');
   $textColumn.setAttribute('class', 'column-half');
 
+  var $titleRow = document.createElement('div');
+  $titleRow.setAttribute('class', 'row justify-between');
+
+  var $notesRow = document.createElement('div');
+  $notesRow.setAttribute('class', 'row');
+
   var $img = document.createElement('img');
   $img.setAttribute('src', entry.photoUrl);
   $img.setAttribute('class', 'full-width margin-b-1rem border-radius-4px');
@@ -71,13 +82,18 @@ function buildEntryTree(entry) {
   var $title = document.createElement('h3');
   $title.textContent = entry.title;
 
+  var $editIcon = document.createElement('i');
+  $editIcon.setAttribute('class', 'fas fa-pen');
+
   var $notes = document.createElement('p');
   $notes.textContent = entry.notes;
 
   $li.append($row);
   $row.append($imgColumn, $textColumn);
   $imgColumn.append($img);
-  $textColumn.append($title, $notes);
+  $textColumn.append($titleRow, $notesRow);
+  $titleRow.append($title, $editIcon);
+  $notesRow.append($notes);
 
   return $li;
 }

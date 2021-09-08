@@ -115,6 +115,11 @@ ul {
   align-items: center;
 }
 
+i {
+  color: rgb(75, 35, 115);
+  font-size: 1.5rem;
+}
+
 /* media queries */
 @media screen and (min-width: 768px) {
   img {
