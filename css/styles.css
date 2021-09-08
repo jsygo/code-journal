@@ -78,6 +78,29 @@ button {
   background-color: rgb(75, 35, 115);
 }
 
+.justify-start {
+  display: flex;
+  justify-content: start;
+}
+
+.align-baseline {
+  align-items: baseline;
+}
+
+.margin-r-1rem {
+  margin-right: 1rem;
+}
+
+header a[data-view]:hover {
+  cursor: pointer;
+}
+
+/* entries list styling */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
 /* media queries */
 @media screen and (min-width: 768px) {
   img {
