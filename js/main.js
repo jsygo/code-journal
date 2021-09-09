@@ -13,6 +13,7 @@ function addPhoto(event) {
 $photoUrl.addEventListener('input', addPhoto);
 
 var $entryForm = document.querySelector('form');
+// var $entriesNodeList = document.querySelectorAll('li');
 
 function formSubmit(event) {
   event.preventDefault();
@@ -22,11 +23,29 @@ function formSubmit(event) {
   formValues.photoUrl = $entryForm.elements.photoUrl.value;
   formValues.notes = $entryForm.elements.notes.value;
 
-  formValues.entryId = data.nextEntryId++;
+  if (data.editing !== null) {
+    var editedEntry;
+    for (var i = 0; i < data.entries.length; i++) {
+      if (data.editing.entryId === data.entries[i].entryId) {
+        data.entries[i].title = formValues.title;
+        data.entries[i].photoUrl = formValues.photoUrl;
+        data.entries[i].notes = formValues.notes;
 
-  data.entries.unshift(formValues);
+        editedEntry = buildEntryTree(data.entries[i]);
+      }
+    }
+    var querySelectorEntryId = 'li[data-entry-id="' + data.editing.entryId + '"]';
+    var nodeToEdit = document.querySelector(querySelectorEntryId);
+    nodeToEdit.replaceWith(editedEntry);
 
-  $entriesList.prepend(buildEntryTree(formValues));
+    data.editing = null;
+  } else {
+    formValues.entryId = data.nextEntryId++;
+
+    data.entries.unshift(formValues);
+
+    $entriesList.prepend(buildEntryTree(formValues));
+  }
 
   $previewImg.setAttribute('src', 'images/placeholder-image-square.jpg');
 
@@ -59,6 +78,7 @@ $entryForm.addEventListener('submit', formSubmit);
 
 function buildEntryTree(entry) {
   var $entry = document.createElement('li');
+  $entry.setAttribute('data-entry-id', entry.entryId);
 
   var $row = document.createElement('div');
   $row.setAttribute('class', 'row');
@@ -122,10 +142,14 @@ function entriesListClick(event) {
 
 $entriesList.addEventListener('click', entriesListClick);
 
-function contentLoadedHandler(event) {
+function generateEntriesList() {
   for (var i = 0; i < data.entries.length; i++) {
     $entriesList.append(buildEntryTree(data.entries[i]));
   }
+}
+
+function contentLoadedHandler(event) {
+  generateEntriesList();
 
   var previousView = data.view;
   setView(previousView);
@@ -164,3 +188,13 @@ var $newButton = document.querySelector('#new-button');
 $newButton.addEventListener('click', function () {
   setView('entry-form');
 });
+
+// function updateDOMTree(entryId) {
+//   var $entriesNodeList = document.querySelectorAll('li');
+
+//   for (var i = 0; i < $entriesNodeList.length; i++) {
+//     if ($entriesNodeList[i].getAttribute('data-entry-id') === entryId) {
+
+//     }
+//   }
+// }
