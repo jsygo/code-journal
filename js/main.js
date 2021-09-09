@@ -245,6 +245,8 @@ function swapPages(event) {
 
 $navBar.addEventListener('click', swapPages);
 
+var $noEntries = document.querySelector('div.no-entries');
+
 function setView(view) {
   for (var i = 0; i < $views.length; i++) {
     if ($views[i].getAttribute('data-view') === view) {
@@ -253,6 +255,12 @@ function setView(view) {
     } else {
       $views[i].setAttribute('class', 'hidden');
     }
+  }
+
+  if (data.entries.length === 0) {
+    $noEntries.setAttribute('class', 'row no-entries');
+  } else {
+    $noEntries.setAttribute('class', 'row no-entries hidden');
   }
 }
 
