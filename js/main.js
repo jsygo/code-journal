@@ -13,6 +13,7 @@ function addPhoto(event) {
 $photoUrl.addEventListener('input', addPhoto);
 
 var $entryForm = document.querySelector('form');
+var $formHeading = document.querySelector('div[data-view="entry-form"] h1');
 
 function formSubmit(event) {
   event.preventDefault();
@@ -49,6 +50,8 @@ function formSubmit(event) {
   $previewImg.setAttribute('src', 'images/placeholder-image-square.jpg');
 
   $entryForm.reset();
+
+  $formHeading.textContent = 'New Entry';
 
   setView('entries');
 }
@@ -120,10 +123,12 @@ function buildEntryTree(entry) {
 
 var $entriesList = document.querySelector('ul');
 
-function entriesListClick(event) {
+function editIconClick(event) {
   if (!event.target.matches('i')) {
     return;
   }
+
+  $formHeading.textContent = 'Edit Entry';
 
   setView('entry-form');
 
@@ -137,9 +142,53 @@ function entriesListClick(event) {
   $entryForm.elements.title.value = data.editing.title;
   $entryForm.elements.photoUrl.value = data.editing.photoUrl;
   $entryForm.elements.notes.value = data.editing.notes;
+
+  var $saveButtonColumn = document.querySelector('#save-button-column');
+  var $submitButton = document.querySelector('button[type="submit"]');
+  $saveButtonColumn.removeChild($submitButton);
+
+  // <div class="row justify-between">
+  //   <a href="#">delete</a>
+  //   <button type="submit" class="border-radius-4px">SAVE</button>
+  // </div>
+
+  var $rowForDelete = document.createElement('div');
+  $rowForDelete.setAttribute('class', 'row justify-between');
+
+  var $deleteEntry = document.createElement('a');
+  $deleteEntry.setAttribute('href', '#');
+  $deleteEntry.textContent = 'Delete Entry';
+
+  $rowForDelete.append($deleteEntry, $submitButton);
+
+  $saveButtonColumn.append($rowForDelete);
+
+  $deleteEntry.addEventListener('click', deleteEntryModal);
 }
 
-$entriesList.addEventListener('click', entriesListClick);
+function deleteEntryModal(event) {
+  $deleteEntryModal.setAttribute('class', 'modal center-content');
+}
+
+var $deleteEntryModal = document.querySelector('div.modal');
+
+function cancelDelete() {
+  $deleteEntryModal.setAttribute('class', 'modal center-content hidden');
+}
+
+function confirmDelete() {
+
+}
+
+function cancelOrConfirmDelete(event) {
+  if (event.target.matches('.modal-cancel-button')) {
+    cancelDelete();
+  }
+}
+
+$deleteEntryModal.addEventListener('click', cancelOrConfirmDelete);
+
+$entriesList.addEventListener('click', editIconClick);
 
 function generateEntriesList() {
   for (var i = 0; i < data.entries.length; i++) {
