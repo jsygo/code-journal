@@ -22,11 +22,29 @@ function formSubmit(event) {
   formValues.photoUrl = $entryForm.elements.photoUrl.value;
   formValues.notes = $entryForm.elements.notes.value;
 
-  formValues.entryId = data.nextEntryId++;
+  if (data.editing !== null) {
+    var editedEntry;
+    for (var i = 0; i < data.entries.length; i++) {
+      if (data.editing.entryId === data.entries[i].entryId) {
+        data.entries[i].title = formValues.title;
+        data.entries[i].photoUrl = formValues.photoUrl;
+        data.entries[i].notes = formValues.notes;
 
-  data.entries.unshift(formValues);
+        editedEntry = buildEntryTree(data.entries[i]);
+      }
+    }
+    var querySelectorEntryId = 'li[data-entry-id="' + data.editing.entryId + '"]';
+    var nodeToEdit = document.querySelector(querySelectorEntryId);
+    nodeToEdit.replaceWith(editedEntry);
 
-  $entriesList.prepend(buildEntryTree(formValues));
+    data.editing = null;
+  } else {
+    formValues.entryId = data.nextEntryId++;
+
+    data.entries.unshift(formValues);
+
+    $entriesList.prepend(buildEntryTree(formValues));
+  }
 
   $previewImg.setAttribute('src', 'images/placeholder-image-square.jpg');
 
@@ -46,14 +64,20 @@ $entryForm.addEventListener('submit', formSubmit);
             class="full-width margin-b-1rem border-radius-4px">
         </div>
         <div class="column-half">
-          <h3>Title</h3>
-          <p>Notes</p>
+          <div class="row justify-between">
+            <h3>Title</h3>
+            <i class="fas fa-pen"></i>
+          </div>
+          <div class="row">
+            <p>Notes</p>
+          </div>
         </div>
       </div>
     </li> */
 
 function buildEntryTree(entry) {
-  var $li = document.createElement('li');
+  var $entry = document.createElement('li');
+  $entry.setAttribute('data-entry-id', entry.entryId);
 
   var $row = document.createElement('div');
   $row.setAttribute('class', 'row');
@@ -64,6 +88,12 @@ function buildEntryTree(entry) {
   var $textColumn = document.createElement('div');
   $textColumn.setAttribute('class', 'column-half');
 
+  var $titleRow = document.createElement('div');
+  $titleRow.setAttribute('class', 'row justify-between');
+
+  var $notesRow = document.createElement('div');
+  $notesRow.setAttribute('class', 'row');
+
   var $img = document.createElement('img');
   $img.setAttribute('src', entry.photoUrl);
   $img.setAttribute('class', 'full-width margin-b-1rem border-radius-4px');
@@ -71,23 +101,54 @@ function buildEntryTree(entry) {
   var $title = document.createElement('h3');
   $title.textContent = entry.title;
 
+  var $editIcon = document.createElement('i');
+  $editIcon.setAttribute('class', 'fas fa-pen');
+  $editIcon.setAttribute('data-entry-id', entry.entryId);
+
   var $notes = document.createElement('p');
   $notes.textContent = entry.notes;
 
-  $li.append($row);
+  $entry.append($row);
   $row.append($imgColumn, $textColumn);
   $imgColumn.append($img);
-  $textColumn.append($title, $notes);
+  $textColumn.append($titleRow, $notesRow);
+  $titleRow.append($title, $editIcon);
+  $notesRow.append($notes);
 
-  return $li;
+  return $entry;
 }
 
 var $entriesList = document.querySelector('ul');
 
-function contentLoadedHandler(event) {
+function entriesListClick(event) {
+  if (!event.target.matches('i')) {
+    return;
+  }
+
+  setView('entry-form');
+
+  for (var i = 0; i < data.entries.length; i++) {
+    if (JSON.stringify(data.entries[i].entryId) === event.target.getAttribute('data-entry-id')) {
+      data.editing = data.entries[i];
+    }
+  }
+
+  $previewImg.setAttribute('src', data.editing.photoUrl);
+  $entryForm.elements.title.value = data.editing.title;
+  $entryForm.elements.photoUrl.value = data.editing.photoUrl;
+  $entryForm.elements.notes.value = data.editing.notes;
+}
+
+$entriesList.addEventListener('click', entriesListClick);
+
+function generateEntriesList() {
   for (var i = 0; i < data.entries.length; i++) {
     $entriesList.append(buildEntryTree(data.entries[i]));
   }
+}
+
+function contentLoadedHandler(event) {
+  generateEntriesList();
 
   var previousView = data.view;
   setView(previousView);
