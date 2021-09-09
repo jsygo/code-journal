@@ -38,6 +38,9 @@ function formSubmit(event) {
     var nodeToEdit = document.querySelector(querySelectorEntryId);
     nodeToEdit.replaceWith(editedEntry);
 
+    $saveButtonColumn.removeChild($rowForDelete);
+    $saveButtonColumn.append($submitButton);
+
     data.editing = null;
   } else {
     formValues.entryId = data.nextEntryId++;
@@ -123,6 +126,11 @@ function buildEntryTree(entry) {
 
 var $entriesList = document.querySelector('ul');
 
+var $saveButtonColumn = document.querySelector('#save-button-column');
+var $submitButton = document.querySelector('button[type="submit"]');
+var $rowForDelete = document.createElement('div');
+var $deleteEntry = document.createElement('a');
+
 function editIconClick(event) {
   if (!event.target.matches('i')) {
     return;
@@ -143,8 +151,6 @@ function editIconClick(event) {
   $entryForm.elements.photoUrl.value = data.editing.photoUrl;
   $entryForm.elements.notes.value = data.editing.notes;
 
-  var $saveButtonColumn = document.querySelector('#save-button-column');
-  var $submitButton = document.querySelector('button[type="submit"]');
   $saveButtonColumn.removeChild($submitButton);
 
   // <div class="row justify-between">
@@ -152,10 +158,8 @@ function editIconClick(event) {
   //   <button type="submit" class="border-radius-4px">SAVE</button>
   // </div>
 
-  var $rowForDelete = document.createElement('div');
   $rowForDelete.setAttribute('class', 'row justify-between');
 
-  var $deleteEntry = document.createElement('a');
   $deleteEntry.setAttribute('href', '#');
   $deleteEntry.textContent = 'Delete Entry';
 
@@ -177,12 +181,32 @@ function cancelDelete() {
 }
 
 function confirmDelete() {
+  for (var i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === data.editing.entryId) {
+      data.entries.splice(i, 1);
+    }
+  }
 
+  var querySelectorEntryId = 'li[data-entry-id="' + data.editing.entryId + '"]';
+  var nodeToDelete = document.querySelector(querySelectorEntryId);
+  $entriesList.removeChild(nodeToDelete);
+
+  $deleteEntryModal.setAttribute('class', 'modal center-content hidden');
+
+  setView('entries');
 }
 
 function cancelOrConfirmDelete(event) {
   if (event.target.matches('.modal-cancel-button')) {
     cancelDelete();
+  }
+  if (event.target.matches('.modal-confirm-button')) {
+    confirmDelete();
+    data.editing = null;
+    $entryForm.reset();
+    $previewImg.setAttribute('src', 'images/placeholder-image-square.jpg');
+    $saveButtonColumn.removeChild($rowForDelete);
+    $saveButtonColumn.append($submitButton);
   }
 }
 
