@@ -13,7 +13,6 @@ function addPhoto(event) {
 $photoUrl.addEventListener('input', addPhoto);
 
 var $entryForm = document.querySelector('form');
-// var $entriesNodeList = document.querySelectorAll('li');
 
 function formSubmit(event) {
   event.preventDefault();
@@ -188,13 +187,3 @@ var $newButton = document.querySelector('#new-button');
 $newButton.addEventListener('click', function () {
   setView('entry-form');
 });
-
-// function updateDOMTree(entryId) {
-//   var $entriesNodeList = document.querySelectorAll('li');
-
-//   for (var i = 0; i < $entriesNodeList.length; i++) {
-//     if ($entriesNodeList[i].getAttribute('data-entry-id') === entryId) {
-
-//     }
-//   }
-// }
