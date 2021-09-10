@@ -289,9 +289,14 @@ function searchBarInput(event) {
 
   for (var i = 0; i < $entriesNodeList.length; i++) {
     var $entryTitle = $entriesNodeList[i].querySelector('h3');
+    var $entryNote = $entriesNodeList[i].querySelector('p');
 
     if (!$entryTitle.textContent.toLowerCase().includes($searchBar.value.toLowerCase())) {
-      $entriesNodeList[i].setAttribute('class', 'hidden');
+      if (!$entryNote.textContent.toLowerCase().includes($searchBar.value.toLowerCase())) {
+        $entriesNodeList[i].setAttribute('class', 'hidden');
+      } else {
+        $entriesNodeList[i].setAttribute('class', '');
+      }
     } else {
       $entriesNodeList[i].setAttribute('class', '');
     }
