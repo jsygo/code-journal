@@ -38,8 +38,9 @@ function formSubmit(event) {
     var nodeToEdit = document.querySelector(querySelectorEntryId);
     nodeToEdit.replaceWith(editedEntry);
 
-    $saveButtonColumn.removeChild($rowForDelete);
-    $saveButtonColumn.append($submitButton);
+    $saveButtonColumn.setAttribute('class', 'column-full text-align-right');
+
+    $deleteEntry.setAttribute('class', 'delete hidden');
 
     data.editing = null;
   } else {
@@ -126,10 +127,9 @@ function buildEntryTree(entry) {
 
 var $entriesList = document.querySelector('ul');
 
+var $deleteEntry = document.querySelector('a.delete');
+
 var $saveButtonColumn = document.querySelector('#save-button-column');
-var $submitButton = document.querySelector('button[type="submit"]');
-var $rowForDelete = document.createElement('div');
-var $deleteEntry = document.createElement('a');
 
 function editIconClick(event) {
   if (!event.target.matches('i')) {
@@ -151,21 +151,9 @@ function editIconClick(event) {
   $entryForm.elements.photoUrl.value = data.editing.photoUrl;
   $entryForm.elements.notes.value = data.editing.notes;
 
-  $saveButtonColumn.removeChild($submitButton);
+  $saveButtonColumn.setAttribute('class', 'column-full justify-between');
 
-  // <div class="row justify-between">
-  //   <a href="#">delete</a>
-  //   <button type="submit" class="border-radius-4px">SAVE</button>
-  // </div>
-
-  $rowForDelete.setAttribute('class', 'row justify-between');
-
-  $deleteEntry.setAttribute('href', '#');
-  $deleteEntry.textContent = 'Delete Entry';
-
-  $rowForDelete.append($deleteEntry, $submitButton);
-
-  $saveButtonColumn.append($rowForDelete);
+  $deleteEntry.setAttribute('class', 'delete');
 
   $deleteEntry.addEventListener('click', deleteEntryModal);
 }
@@ -205,8 +193,6 @@ function cancelOrConfirmDelete(event) {
     data.editing = null;
     $entryForm.reset();
     $previewImg.setAttribute('src', 'images/placeholder-image-square.jpg');
-    $saveButtonColumn.removeChild($rowForDelete);
-    $saveButtonColumn.append($submitButton);
   }
 }
 
