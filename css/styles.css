@@ -24,6 +24,19 @@ h6 {
   margin-bottom: 0.5rem;
 }
 
+a {
+  text-decoration: none;
+  color: white;
+}
+
+i {
+  font-size: 1.5rem;
+}
+
+i:hover {
+  cursor: pointer;
+}
+
 .font-weight-400 {
   font-weight: 400;
 }
@@ -89,6 +102,16 @@ button:active {
 }
 
 /* nav styling */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+main {
+  margin-top: 57px;
+}
+
 .white-text {
   color: white;
 }
@@ -110,8 +133,33 @@ button:active {
   margin-right: 1rem;
 }
 
+.padding-tb-half-rem {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 header a[data-view]:hover {
   cursor: pointer;
+}
+
+/* search bar */
+
+i.fa-search {
+  justify-self: flex-end;
+}
+
+.push-right {
+  margin-left: auto;
+}
+
+.search-bar {
+  height: 2rem;
+  width: 50px;
+}
+
+.search-bar:focus {
+  width: 150px;
+  transition: width 0.3s ease-in;
 }
 
 /* entries list styling */
@@ -129,13 +177,13 @@ ul {
   align-items: center;
 }
 
-i {
+i.fa-pen {
   color: rgb(75, 35, 115);
-  font-size: 1.5rem;
+  margin-top: 8px;
 }
 
-i:hover {
-  cursor: pointer;
+li .column-half {
+  padding: 0;
 }
 
 /* delete entry modal */
@@ -183,5 +231,17 @@ i:hover {
 
   .modal > .container {
     padding: 0.75rem 0;
+  }
+
+  li .column-half:first-child {
+    padding: 0 0.75rem 0 0;
+  }
+
+  li .column-half:last-child {
+    padding: 0 0 0 0.75rem;
+  }
+
+  .search-bar:focus {
+    width: 250px;
   }
 }

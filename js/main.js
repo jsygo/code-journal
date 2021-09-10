@@ -254,3 +254,15 @@ var $newButton = document.querySelector('#new-button');
 $newButton.addEventListener('click', function () {
   setView('entry-form');
 });
+
+// search bar
+
+var $searchIcon = document.querySelector('.fa-search');
+var $searchBar = document.querySelector('.search-bar');
+
+function searchIconClick(event) {
+  setView('entries');
+  $searchBar.focus();
+}
+
+$searchIcon.addEventListener('click', searchIconClick);
