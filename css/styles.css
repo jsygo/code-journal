@@ -154,12 +154,16 @@ i.fa-search {
 
 .search-bar {
   height: 2rem;
-  width: 50px;
+  width: 0;
 }
 
 .search-bar:focus {
   width: 150px;
   transition: width 0.3s ease-in;
+}
+
+.invisible {
+  visibility: hidden;
 }
 
 /* entries list styling */
