@@ -3,17 +3,32 @@
 
 // dealing with form submission
 
+// dom elements
+
+// form elements
+var $entryForm = document.querySelector('form');
 var $photoUrl = document.querySelector('#photo-url');
 var $previewImg = document.querySelector('#preview-img');
+var $formHeading = document.querySelector('div[data-view="entry-form"] h1');
+var $entriesList = document.querySelector('ul');
+var $deleteEntry = document.querySelector('a.delete');
+var $saveButtonColumn = document.querySelector('#save-button-column');
+var $deleteEntryModal = document.querySelector('div.modal');
+var $navBar = document.querySelector('header');
+var $views = document.querySelectorAll('main div[data-view]');
+var $noEntries = document.querySelector('div.no-entries');
+var $newButton = document.querySelector('#new-button');
+
+// buttons
+var $searchIcon = document.querySelector('.fa-search');
+var $searchBar = document.querySelector('.search-bar');
+
+// event listeners
+$photoUrl.addEventListener('input', addPhoto);
 
 function addPhoto(event) {
   $previewImg.setAttribute('src', $photoUrl.value);
 }
-
-$photoUrl.addEventListener('input', addPhoto);
-
-var $entryForm = document.querySelector('form');
-var $formHeading = document.querySelector('div[data-view="entry-form"] h1');
 
 function formSubmit(event) {
   event.preventDefault();
@@ -25,6 +40,7 @@ function formSubmit(event) {
 
   if (data.editing !== null) {
     var editedEntry;
+    // iterate through the entries
     for (var i = 0; i < data.entries.length; i++) {
       if (data.editing.entryId === data.entries[i].entryId) {
         data.entries[i].title = formValues.title;
@@ -125,12 +141,6 @@ function buildEntryTree(entry) {
   return $entry;
 }
 
-var $entriesList = document.querySelector('ul');
-
-var $deleteEntry = document.querySelector('a.delete');
-
-var $saveButtonColumn = document.querySelector('#save-button-column');
-
 function editIconClick(event) {
   if (!event.target.matches('i')) {
     return;
@@ -161,8 +171,6 @@ function editIconClick(event) {
 function deleteEntryModal(event) {
   $deleteEntryModal.setAttribute('class', 'modal center-content');
 }
-
-var $deleteEntryModal = document.querySelector('div.modal');
 
 function cancelDelete() {
   $deleteEntryModal.setAttribute('class', 'modal center-content hidden');
@@ -217,9 +225,6 @@ window.addEventListener('DOMContentLoaded', contentLoadedHandler);
 
 // view swapping
 
-var $navBar = document.querySelector('header');
-var $views = document.querySelectorAll('main div[data-view]');
-
 function swapPages(event) {
   if (!event.target.matches('a[data-view]')) {
     return;
@@ -245,8 +250,6 @@ function swapPages(event) {
 
 $navBar.addEventListener('click', swapPages);
 
-var $noEntries = document.querySelector('div.no-entries');
-
 function setView(view) {
   for (var i = 0; i < $views.length; i++) {
     if ($views[i].getAttribute('data-view') === view) {
@@ -264,15 +267,11 @@ function setView(view) {
   }
 }
 
-var $newButton = document.querySelector('#new-button');
 $newButton.addEventListener('click', function () {
   setView('entry-form');
 });
 
 // search bar
-
-var $searchIcon = document.querySelector('.fa-search');
-var $searchBar = document.querySelector('.search-bar');
 
 function searchIconClick(event) {
   setView('entries');
