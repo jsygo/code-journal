@@ -225,6 +225,20 @@ function swapPages(event) {
     return;
   }
 
+  if (data.editing !== null) {
+    $saveButtonColumn.setAttribute('class', 'column-full text-align-right');
+
+    $deleteEntry.setAttribute('class', 'delete hidden');
+
+    $previewImg.setAttribute('src', 'images/placeholder-image-square.jpg');
+
+    $entryForm.reset();
+
+    $formHeading.textContent = 'New Entry';
+
+    data.editing = null;
+  }
+
   var dataView = event.target.getAttribute('data-view');
   setView(dataView);
 }
