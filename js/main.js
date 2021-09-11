@@ -254,3 +254,53 @@ var $newButton = document.querySelector('#new-button');
 $newButton.addEventListener('click', function () {
   setView('entry-form');
 });
+
+// search bar
+
+var $searchIcon = document.querySelector('.fa-search');
+var $searchBar = document.querySelector('.search-bar');
+
+function searchIconClick(event) {
+  setView('entries');
+
+  $searchBar.setAttribute('class', 'search-bar push-right margin-r-1rem border-radius-4px');
+
+  $searchBar.focus();
+}
+
+$searchIcon.addEventListener('click', searchIconClick);
+
+function searchBarBlur(event) {
+  $searchBar.setAttribute('class', 'search-bar push-right margin-r-1rem border-radius-4px invisible');
+
+  var $entriesNodeList = document.querySelectorAll('li');
+
+  for (var i = 0; i < $entriesNodeList.length; i++) {
+    $entriesNodeList[i].setAttribute('class', '');
+  }
+
+  $searchBar.value = null;
+}
+
+$searchBar.addEventListener('blur', searchBarBlur);
+
+function searchBarInput(event) {
+  var $entriesNodeList = document.querySelectorAll('li');
+
+  for (var i = 0; i < $entriesNodeList.length; i++) {
+    var $entryTitle = $entriesNodeList[i].querySelector('h3');
+    var $entryNote = $entriesNodeList[i].querySelector('p');
+
+    if (!$entryTitle.textContent.toLowerCase().includes($searchBar.value.toLowerCase())) {
+      if (!$entryNote.textContent.toLowerCase().includes($searchBar.value.toLowerCase())) {
+        $entriesNodeList[i].setAttribute('class', 'hidden');
+      } else {
+        $entriesNodeList[i].setAttribute('class', '');
+      }
+    } else {
+      $entriesNodeList[i].setAttribute('class', '');
+    }
+  }
+}
+
+$searchBar.addEventListener('input', searchBarInput);
